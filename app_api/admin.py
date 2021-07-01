@@ -33,6 +33,6 @@ class IntervieweeAdmin(admin.ModelAdmin):
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     """ Ответы """
-    list_display = [field.name for field in Question._meta.fields]  # все поля выводит в цикле
+    list_display = ["user_id", "survey", "text"]  # все поля выводит в цикле
     search_fields = ["user_id", "survey", "text"]
     list_filter = ["user_id", "survey", "text"]

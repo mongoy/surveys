@@ -51,10 +51,10 @@ class Question(models.Model):
 
 class Interviewee(models.Model):
     """ Пользовавтель """
-    id = models.IntegerField(max_length=9)
+    id_user = models.IntegerField()
 
     def __str__(self):
-        return self.id
+        return self.id_user
 
     class Meta:
         """ Вид в админке """
@@ -66,7 +66,7 @@ class Answer(models.Model):
     """ Ответы """
     user_id = models.ForeignKey(Interviewee, on_delete=models.PROTECT, verbose_name='Пользователь')
     survey = models.ForeignKey(Survey, on_delete=models.PROTECT, verbose_name='Опрос')
-    text = models.CharField(verbose_name='Содержимое ответа')
+    text = models.CharField(max_length=250, verbose_name='Содержимое ответа')
 
     def __str__(self):
         return self.text
