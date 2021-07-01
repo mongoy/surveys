@@ -6,7 +6,7 @@ from .models import *
 class SurveyAdmin(admin.ModelAdmin):
     """ Опросы """
     list_display = [field.name for field in Survey._meta.fields]  # все поля выводит в цикле
-    search_fields = ["title"]
+    search_fields = ["title", "data_start"]
     list_filter = ["title", "data_start"]
 
 
