@@ -9,6 +9,12 @@ class SurveyAdmin(admin.ModelAdmin):
     search_fields = ["title", "data_start"]
     list_filter = ["title", "data_start"]
 
+    def get_readonly_fields(self, request, obj=None):
+        """ запрет на редактирование """
+        if obj:  # when editing an object
+            return ['data_start']
+        return self.readonly_fields
+
 
 @admin.register(TypeQuestion)
 class TypeQuestionAdmin(admin.ModelAdmin):
@@ -27,12 +33,12 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Interviewee)
 class IntervieweeAdmin(admin.ModelAdmin):
     """ Пользовавтель """
-    list_display = ("id",)
+    list_display = ("id", "inter")
 
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     """ Ответы """
-    list_display = ["user_id", "survey", "text"]  # все поля выводит в цикле
-    search_fields = ["user_id", "survey", "text"]
-    list_filter = ["user_id", "survey", "text"]
+    list_display = ["inter", "survey", "question", "text"]
+    search_fields = ["inter", "survey", "text"]
+    list_filter = ["inter", "survey", "text"]

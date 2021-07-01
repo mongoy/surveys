@@ -6,7 +6,7 @@ class Survey(models.Model):
     """ Опрос """
     title = models.CharField(max_length=250, verbose_name='Название')
     description = models.TextField(verbose_name='Описание', blank=True)
-    data_start = models.DateField(verbose_name='Дата начала', editable=False)
+    data_start = models.DateField(verbose_name='Дата начала')
     data_stop = models.DateField(verbose_name='Дата окончания')
 
     def __str__(self):
@@ -38,7 +38,6 @@ class Question(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.PROTECT, verbose_name='Опрос')
     type_question = models.ForeignKey(TypeQuestion, on_delete=models.PROTECT, verbose_name='Тип вопроса')
     text_question = models.TextField(verbose_name='Текст вопроса')
-    text_answer = models.TextField(verbose_name='Текст ответа')
 
     def __str__(self):
         return self.text_question
@@ -51,10 +50,10 @@ class Question(models.Model):
 
 class Interviewee(models.Model):
     """ Пользовавтель """
-    id_user = models.IntegerField()
+    inter = models.IntegerField()
 
     def __str__(self):
-        return self.id_user
+        return str(self.inter)
 
     class Meta:
         """ Вид в админке """
@@ -64,8 +63,9 @@ class Interviewee(models.Model):
 
 class Answer(models.Model):
     """ Ответы """
-    user_id = models.ForeignKey(Interviewee, on_delete=models.PROTECT, verbose_name='Пользователь')
+    inter = models.ForeignKey(Interviewee, on_delete=models.PROTECT, verbose_name='Пользователь')
     survey = models.ForeignKey(Survey, on_delete=models.PROTECT, verbose_name='Опрос')
+    question = models.ForeignKey(Question, on_delete=models.PROTECT, verbose_name='Вопроса')
     text = models.CharField(max_length=250, verbose_name='Содержимое ответа')
 
     def __str__(self):
